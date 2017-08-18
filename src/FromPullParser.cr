@@ -2,13 +2,21 @@ require "./FromPullParser/*"
 
 module FromPullParser
 
-  macro extend_parser(_parser, *_args)
-    def self.from_json(io_or_string, *args)
+  macro initialize_from_parser(_parser, *_args, **_nargs)
+    def self.from_json(io_or_string, *args, **nargs)
       parser = {{_parser}}::PullParser.new io_or_string
       if args.empty?
-        new parser
+        if nargs.empty?
+          new parser
+        else
+          new parser, **nargs
+        end
       else
-        new parser, *args
+        if nargs.empty?
+          new parser, *args
+        else
+          new parser, *args, **nargs
+        end
       end
     end
 

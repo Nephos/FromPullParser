@@ -8,7 +8,7 @@ end
 
 class Bar < Foo
   getter b : Int32?
-  FromPullParser.extend_parser(JSON, b = nil) do
+  FromPullParser.initialize_from_parser(JSON, b = nil) do
     @b = b
   end
 end
@@ -19,6 +19,10 @@ describe FromPullParser do
     foo.a.should eq 1
 
     bar = Bar.from_json("{\"a\": 1}", 2)
+    bar.a.should eq 1
+    bar.b.should eq 2
+
+    bar = Bar.from_json("{\"a\": 1}", b: 2)
     bar.a.should eq 1
     bar.b.should eq 2
 

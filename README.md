@@ -24,7 +24,7 @@ end
 
 class Bar < Foo
   getter b : Int32?
-  FromPullParser.extend_parser(JSON, b = nil) do
+  FromPullParser.initialize_from_parser(JSON, b = nil) do
     @b = b
   end
 end
